@@ -7,6 +7,7 @@ IMAGE_TAG=$(git rev-parse --short=7 HEAD)
 
 docker build --no-cache -t "${IMAGE}:${IMAGE_TAG}" .
 
+
 if [[ -n "$QUAY_USER" && -n "$QUAY_TOKEN" ]]; then
     DOCKER_CONF="$PWD/.docker"
     mkdir -p "$DOCKER_CONF"
