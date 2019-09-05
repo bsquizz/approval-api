@@ -13,10 +13,11 @@ if [[ -n "$QUAY_USER" && -n "$QUAY_TOKEN" ]]; then
 
     # set +x so we don't echo the json to stdout
     set +x
-    echo "$QUAY_DOCKER_CONFIG_JSON" > .docker_config.json
+    mkdir -p "$WORKSPACE/.docker"
+    echo "$QUAY_DOCKER_CONFIG_JSON" > "$WORKSPACE/.docker/config.json"
     set -x
 
-    docker --config=".docker_config.json" login -u="$QUAY_USER" -p="$QUAY_TOKEN" quay.io
-    docker --config=".docker_config.json" push "${IMAGE}:${IMAGE_TAG}"
-    docker --config=".docker_config.json" push "${IMAGE}:latest"
+    docker --config="$WORKSPACE/.docker" login -u="$QUAY_USER" -p="$QUAY_TOKEN" quay.io
+    docker --config="$WORKSPACE/.docker" push "${IMAGE}:${IMAGE_TAG}"
+    docker --config="$WORKSPACE/.docker" push "${IMAGE}:latest"
 fi
